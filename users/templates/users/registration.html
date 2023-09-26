@@ -1,0 +1,58 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'users/css/registration.css' %}">
+{% endblock %}
+
+{% block content %}
+ <form action="{% url 'users:registration' %}" method ="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="main-content">
+         {% if form.errors %}
+                <div class="alert alert-warning alert-dismissible fade show custom-er" role="alert">
+                    {{ form.errors }}
+                    <span class="close-btn" aria-hidden="true" onclick="this.parentElement.style.display='none';">
+                        ×
+                    </span>
+                </div>
+            {% endif %}
+        <div class="register-form-container">
+              <h1 class="form-title">Registration</h1>
+
+                    <div class="form-fields">
+                        <div class="form-field">
+                            {{ form.first_name }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.last_name }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.username }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.email }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.password1 }}
+                        </div>
+
+                        <div class="form-field">
+                            {{ form.password2 }}
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="submit" class="button button-reg">Registration</button>
+                            <div class="divider">or</div>
+                            <a href="#" class="button button-google">Google</a>
+                            <h1 class="form-title">Already have an account? <a href="{% url 'users:login' %}"><br>Log in</a>.</h1>
+                        </div>
+                </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

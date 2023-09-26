@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<form action="{% url 'users:login' %}" method ="post">
+    {% csrf_token %}
+        <div class="main-content">
+            {% if form.non_field_errors %}
+                <div class="alert alert-warning alert-dismissible fade show custom-er" role="alert">
+                    {{ form.non_field_errors }}
+                    <span class="close-btn" aria-hidden="true" onclick="this.parentElement.style.display='none';">
+                        ×
+                    </span>
+                </div>
+            {% endif %}
+            <div class="login-form-container">
+                <h1 class="form-title">Login</h1>
+
+                <div class="form-fields">
+                    <div class="form-field">
+                        {{ form.username }}
+                    </div>
+                    <div class="form-field">
+                        {{ form.password }}
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="button button-log">Login</button>
+                        <h1 class="form-title">Don't have an account? <a href="{% url 'users:registration' %}"><br>Sign up</a></h1>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+</form>
+{% endblock %}
