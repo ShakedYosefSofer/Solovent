@@ -17,6 +17,5 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-#check connect to gitkraken and github
 if __name__ == '__main__':
     main()
