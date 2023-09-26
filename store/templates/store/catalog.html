@@ -1,0 +1,85 @@
+{% extends 'web/layout.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static '/store/css/catalog.css' %}">
+{% endblock %}
+
+<!-- Блок заголовка страницы -->
+{% block title %} {{ title }} {% endblock %}
+
+<!-- Блок основного контента -->
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <!--Category-->
+        <div class="col-lg-3">
+            <h1 class="my-4 my-4-color">Category</h1>
+            <div class="list-group">
+                <a class="list-group-item" href="{% url 'store:catalog' %}">
+                     <img class="cat-ico" src="{% static 'store/ico/all_cat_ico.png' %}" alt="Category ico">
+                    All products
+                </a>
+
+                {% for cat in cat_products %}
+                    <a class="list-group-item" href="{% url 'store:category' cat.id %}">
+                        <img class="cat-ico"
+                             src="{% if cat.image %}
+                             {{ cat.image.url }}
+                             {% else %}
+                             {% static 'store/ico/default_cat_ico.png' %}
+                             {% endif %}" alt="Category ico">
+                             {{ cat.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!--Main Content Store-->
+        <div class="col-lg-9">
+            <div class="row">
+                {% if object_list %}
+                    {% for product in object_list %}
+                        <div class="col-lg-4 col-sm-6 cl-custom">
+                            <div class="product-card">
+                                <div class="product-thumb">
+
+                                    <a href="{% url 'store:detail' product.id %}">
+                                        <img class="card-img-top"
+                                        src="{% if product.image %}
+                                        {{ product.image.url }}
+                                        {% else %}
+                                        {% static 'store/img/default product.png' %}
+                                        {% endif %}" alt="Card image cap">
+                                    </a>
+                                </div>
+
+                                <div class="product-details">
+                                    <h6 class="product-cat-description">{{ product.category }}</h6>
+                                    <h4>
+                                        <a href="">{{ product.name|truncatewords_html:5 }}</a>
+                                    </h4>
+                                    <div class="product-price">Starting from ₪{{ product.price }}</div>
+                                    <p>{{ product.description|truncatechars_html:70 }}</p>
+                                    <div class="product-bottom-details">
+                                        <div class="product-links">
+                                            <a class="btn-color-custom" href="{% url 'store:detail' product.id %}">More</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                {% endfor %}
+            {% else %}
+                <div class="empty-cat" >There are no products in this category yet =(</div>
+            {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
